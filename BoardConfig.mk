@@ -1,7 +1,17 @@
 #
-# Copyright (C) 2022 The Android Open Source Project
-# Copyright (C) 2022 The TWRP Open Source Project
-# Copyright (C) 2019-Present A-Team Digital Solutions
+# Copyright 2020 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 
 DEVICE_PATH := device/motorola/lake
@@ -47,9 +57,7 @@ BOARD_KERNEL_CMDLINE := \
     androidboot.hab.csv=2 \
     androidboot.hab.cid=50 \
     androidboot.selinux=permissive \
-    androidboot.fastboot=1 \
-    # Retrofit Dynamic
-    androidboot.boot_devices=soc/c0c4000.sdhci
+    androidboot.fastboot=1
 
 BOARD_BOOT_HEADER_VERSION := 1
 BOARD_INCLUDE_RECOVERY_DTBO := true
@@ -67,28 +75,20 @@ BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
 
 # Partitions
-#BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 BOARD_USES_RECOVERY_AS_BOOT := true
+
 BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_DTBOIMG_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2969567232
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 53477358592
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
-# Retrofit dynamic partitions
-BOARD_SUPER_PARTITION_GROUPS := moto_dynamic_partitions
-BOARD_MOTO_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor
-BOARD_MOTO_DYNAMIC_PARTITIONS_SIZE := 3904897024
-BOARD_SUPER_PARTITION_SIZE := 3909091328
-BOARD_SUPER_PARTITION_METADATA_DEVICE := system
-BOARD_SUPER_PARTITION_BLOCK_DEVICES := system vendor
-BOARD_SUPER_PARTITION_SYSTEM_DEVICE_SIZE := 2969567232
-BOARD_SUPER_PARTITION_VENDOR_DEVICE_SIZE := 939524096
 
-# Extra Symlinks
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /mnt/vendor/persist:/persist
 
@@ -109,6 +109,7 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     ashmemd_aidl_interface-cpp \
     libashmemd_client \
     libcap \
+    libicui18n \
     libicuuc \
     libion \
     libpcrecpp \
@@ -122,6 +123,7 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libashmemd_client.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libcap.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libicui18n.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libicuuc.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
@@ -156,11 +158,3 @@ TARGET_USES_LOGD := true
 # TWRP Installer
 RECOVERY_INSTALLER_PATH := bootable/recovery/installer
 USE_RECOVERY_INSTALLER := true
-
-# Build Flags
-TW_MAINTAINER := PizzaG
-TW_DEVICE_VERSION := Moto G7 Plus
-RECOVERY_VARIANT := TWRP_11-Dynamic
-ALLOW_MISSING_DEPENDENCIES := true
-LC_ALL := "C"
-

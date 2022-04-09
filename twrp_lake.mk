@@ -1,21 +1,28 @@
 #
-# Copyright (C) 2022 The Android Open Source Project
-# Copyright (C) 2022 The TWRP Open Source Project
-# Copyright (C) 2019-Present A-Team Digital Solutions
+# Copyright 2020 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 
 # Inherit from our custom product configuration
-$(call inherit-product, vendor/twrp/Android.mk)
-
-# Inherit device specific product configuration
-$(call inherit-product, device/motorola/lake/device.mk)
-
-PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,device/motorola/lake/recovery/root,recovery/root)
+$(call inherit-product, vendor/omni/config/common.mk)
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := lake
-PRODUCT_NAME := twrp_lake
-PRODUCT_BRAND := Moto
-PRODUCT_MODEL := XT1965-T
+PRODUCT_NAME := omni_lake
+PRODUCT_BRAND := motorola
+PRODUCT_MODEL := moto g(7) plus
 PRODUCT_MANUFACTURER := Motorola
-PRODUCT_RELEASE_NAME := Moto G7 Plus
+
+# Inherit device specific product configuration
+$(call inherit-product, device/motorola/lake/device.mk)
